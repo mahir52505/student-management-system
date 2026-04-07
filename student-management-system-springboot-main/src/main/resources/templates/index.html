@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Student Management System</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="container mt-4">
+	<div class="card">
+		<div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+			<h2>Student Management System</h2>
+			<a th:href="@{/showNewStudentForm}" class="btn btn-success">
+				<i class="fas fa-plus"></i> Add New Student
+			</a>
+		</div>
+		<div class="card-body">
+			<!-- Statistics Row -->
+			<div class="row mb-4">
+				<div class="col-md-4">
+					<div class="alert alert-info">
+						<strong>Total Students:</strong> <span th:text="${totalStudents}">0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Search Form -->
+			<form action="/search" method="get" class="mb-4">
+				<div class="input-group">
+					<input type="text" name="keyword" class="form-control"
+					       placeholder="Search by name or email..."
+					       th:value="${keyword}">
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-search"></i> Search
+					</button>
+					<a th:href="@{/}" class="btn btn-secondary">
+						<i class="fas fa-sync"></i> Show All
+					</a>
+				</div>
+			</form>
+
+			<!-- Students Table -->
+			<table class="table table-bordered table-striped table-hover">
+				<thead class="table-dark">
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Phone</th>
+					<th>Course</th>
+					<th>Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:each="student : ${students}">
+					<td th:text="${student.id}">1</td>
+					<td th:text="${student.firstName}">John</td>
+					<td th:text="${student.lastName}">Doe</td>
+					<td th:text="${student.email}">john@example.com</td>
+					<td th:text="${student.phone}">1234567890</td>
+					<td th:text="${student.course}">Computer Science</td>
+					<td>
+						<a th:href="@{/showFormForUpdate/{id}(id=${student.id})}"
+						   class="btn btn-sm btn-primary">
+							<i class="fas fa-edit"></i> Edit
+						</a>
+						<a th:href="@{/deleteStudent/{id}(id=${student.id})}"
+						   class="btn btn-sm btn-danger"
+						   onclick="return confirm('Are you sure you want to delete this student?')">
+							<i class="fas fa-trash"></i> Delete
+						</a>
+					</td>
+				</tr>
+				<tr th:if="${students.empty}">
+					<td colspan="7" class="text-center text-muted">
+						No students found. Click "Add New Student" to add one.
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
