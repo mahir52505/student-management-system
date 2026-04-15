@@ -1,0 +1,8 @@
+# Theme Settings
+
+# Choose a theme for your site
+ theme: minima
+
+# Site settings
+title: My Student Management System
+description: A simple student management system built with GitHub Pages.
